@@ -13,4 +13,8 @@ public class ButtonMenu : MonoBehaviour
     {
         SceneManager.LoadScene(buttonTwoScene);
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
