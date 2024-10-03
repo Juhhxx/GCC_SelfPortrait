@@ -28,7 +28,6 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("AAAAA");
                 Vector3 newRotation = rectTrans.rotation.eulerAngles;
                 newRotation.z -= 90f;
                 rectTrans.rotation = Quaternion.Euler(newRotation.x,newRotation.y,newRotation.z);

@@ -10,9 +10,11 @@ public class Timer : MonoBehaviour
     [SerializeField] private float time;
     private bool timerRun = true;
     private WinCheck win;
+    private GameObject gameOverScreen;
     void Start()
     {
-        win = FindFirstObjectByType<WinCheck>().GetComponent<WinCheck>();
+        win = FindFirstObjectByType<WinCheck>();
+        gameOverScreen = FindFirstObjectByType<Lost>().gameObject;
     }
     void Update()
     {
@@ -31,7 +33,10 @@ public class Timer : MonoBehaviour
         else
         {
             if (!win.HasWon)
+            {
                 Debug.Log("Time has run out!");
+                gameOverScreen.transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
     public void StopTimer()
