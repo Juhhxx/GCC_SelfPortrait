@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -7,11 +8,41 @@ public class WebCamPhoto : MonoBehaviour
 {
     private WebCamTexture webCamTexture;
     [SerializeField] private GameObject[] allPieces = new GameObject[9];
+
+    #if UNITY_IOS || UNITY_WEBGL
+    private bool CheckPermissionAndRaiseCallbackIfGranted(UserAuthorization authenticationType)
+    {
+        if (Application.HasUserAuthorization(authenticationType))
+        {
+            InitializeCamera();
+        }
+        return false;
+    }
+
+    private IEnumerator AskForPermissionIfRequired(UserAuthorization authenticationType)
+    {
+        if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
+        {
+            yield return Application.RequestUserAuthorization(authenticationType);
+            if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
+                Debug.LogWarning($"Permission {authenticationType} Denied");
+        }
+    }
+    #endif
     
     void Start()
     {
+        #if UNITY_IOS || UNITY_WEBGL
+        StartCoroutine(AskForPermissionIfRequired(UserAuthorization.WebCam));
+        return;
+        #else
+        InitializeCamera();
+        #endif
+    }
+    void InitializeCamera()
+    {
         webCamTexture = new WebCamTexture();
-        // GetComponent<Renderer>().material.mainTexture = webCamTexture;
+        GetComponent<Renderer>().material.mainTexture = webCamTexture;
         webCamTexture.Play();
     }
     void Update()
