@@ -27,7 +27,6 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     private void Start()
     {
         float rotation = Mathf.Floor(Random.Range(0,4)) * 90;
-        Debug.Log(rotation);
         rectTrans.rotation = Quaternion.Euler(0f,0f,rotation);
     }
     private void Update()
