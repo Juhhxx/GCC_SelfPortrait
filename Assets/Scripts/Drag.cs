@@ -33,10 +33,16 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     {
         if (!gCanvas.blocksRaycasts)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.D|KeyCode.Space))
             {
                 Vector3 newRotation = rectTrans.rotation.eulerAngles;
                 newRotation.z -= 90f;
+                rectTrans.rotation = Quaternion.Euler(newRotation.x,newRotation.y,newRotation.z);
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                Vector3 newRotation = rectTrans.rotation.eulerAngles;
+                newRotation.z += 90f;
                 rectTrans.rotation = Quaternion.Euler(newRotation.x,newRotation.y,newRotation.z);
             }
         }
