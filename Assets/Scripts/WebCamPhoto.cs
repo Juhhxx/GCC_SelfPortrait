@@ -7,42 +7,17 @@ using UnityEngine.UI;
 public class WebCamPhoto : MonoBehaviour
 {
     private WebCamTexture webCamTexture;
-    [SerializeField] private GameObject[] allPieces = new GameObject[9];
-
-    #if UNITY_IOS || UNITY_WEBGL
-    private bool CheckPermissionAndRaiseCallbackIfGranted(UserAuthorization authenticationType)
-    {
-        if (Application.HasUserAuthorization(authenticationType))
-        {
-            InitializeCamera();
-        }
-        return false;
-    }
-
-    private IEnumerator AskForPermissionIfRequired(UserAuthorization authenticationType)
-    {
-        if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
-        {
-            yield return Application.RequestUserAuthorization(authenticationType);
-            if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
-                Debug.LogWarning($"Permission {authenticationType} Denied");
-        }
-    }
-    #endif
+    private Drag[] allPieces;
     
     void Start()
     {
-        #if UNITY_IOS || UNITY_WEBGL
-        StartCoroutine(AskForPermissionIfRequired(UserAuthorization.WebCam));
-        return;
-        #else
-        InitializeCamera();
-        #endif
+        allPieces = FindObjectsByType<Drag>(0);
+        InitializeCamera();  
     }
     void InitializeCamera()
     {
         webCamTexture = new WebCamTexture();
-        GetComponent<Renderer>().material.mainTexture = webCamTexture;
+        // GetComponent<Renderer>().material.mainTexture = webCamTexture;
         webCamTexture.Play();
     }
     void Update()
@@ -77,8 +52,10 @@ public class WebCamPhoto : MonoBehaviour
         {
             Sprite Piece = Sprite.Create(photo,photoFrame,photoPivot);
 
-            allPieces[i].GetComponent<Image>().sprite = Piece;
-            // Debug.Log($"Set Piece {i} : Slice at ({photoFrame.x},{photoFrame.y})");
+            allPieces[i].gameObject.GetComponent<Image>().sprite = Piece;
+            allPieces[i].Id = i + 1;
+
+            Debug.Log($"Set {allPieces[i].gameObject} : Slice at ({photoFrame.x},{photoFrame.y})");
 
             if ((i + 1) % 3 == 0)
             {

@@ -1813,16 +1813,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f16f2eaf8fd072438cd633fa497917a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allPieces:
-  - {fileID: 725812615}
-  - {fileID: 1787461952}
-  - {fileID: 2001654281}
-  - {fileID: 1003530656}
-  - {fileID: 2079055934}
-  - {fileID: 2088510628}
-  - {fileID: 1726306029}
-  - {fileID: 1251036510}
-  - {fileID: 1456089934}
 --- !u!4 &701023461
 Transform:
   m_ObjectHideFlags: 0
@@ -2440,8 +2430,8 @@ Transform:
   - {fileID: 738258634}
   - {fileID: 1035827278}
   - {fileID: 563028796}
-  - {fileID: 1738207036}
   - {fileID: 168098}
+  - {fileID: 1738207036}
   - {fileID: 35901863}
   - {fileID: 642520033}
   - {fileID: 1031487627}
@@ -3771,7 +3761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -191.99998}
+  m_AnchoredPosition: {x: 0.00005340576, y: -191.99995}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1738207037

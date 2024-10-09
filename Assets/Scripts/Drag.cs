@@ -7,7 +7,15 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     [SerializeField] private Canvas canvas;
     [SerializeField] [Range (0,1)] private float alphaValue = 0.5f;
     [SerializeField] private int id;
-    public int Id => id;
+    public int Id
+    {
+        get => id;
+
+        set
+        {
+            id = value;
+        }
+    }
     private CanvasGroup gCanvas;
     private RectTransform rectTrans;
 
