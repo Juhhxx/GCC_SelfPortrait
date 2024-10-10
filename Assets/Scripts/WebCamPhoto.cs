@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class WebCamPhoto : MonoBehaviour
 {
+    [SerializeField] private Image endAnimImage;
     private WebCamTexture webCamTexture;
     private Drag[] allPieces;
     
@@ -47,6 +48,9 @@ public class WebCamPhoto : MonoBehaviour
 
         Rect photoFrame = new Rect(360,480,240,240);
         Vector2 photoPivot = new Vector2(120,120);
+
+        Sprite completedImage = Sprite.Create(photo,new Rect(360,0,720,720),new Vector2(360,360));
+        endAnimImage.sprite = completedImage;
 
         for (int i = 0; i < 9; i++)
         {
