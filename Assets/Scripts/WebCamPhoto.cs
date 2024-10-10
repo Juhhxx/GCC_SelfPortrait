@@ -41,8 +41,8 @@ public class WebCamPhoto : MonoBehaviour
         photo.Apply();
 
         webCamTexture.Stop();
-        // byte[] bytes = photo.EncodeToPNG();
-        // File.WriteAllBytes("Assets\\Sprites\\" + "photo.png", bytes);
+        byte[] bytes = photo.EncodeToPNG();
+        File.WriteAllBytes("Assets\\Sprites\\" + "photo.png", bytes);
         // Debug.Log($"Take Photo\nSave at: Assets\\Sprites\\photo.png");
 
         Rect photoFrame = new Rect(360,480,240,240);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WinCheck : MonoBehaviour
 {
-    [SerializeField] private GameObject[] slotList = new GameObject[9];
+    private Slot[] slotListWin;
     private Timer timer;
     private Slot slot;
     private GameObject gameWinScreen;
@@ -14,8 +14,9 @@ public class WinCheck : MonoBehaviour
     public bool HasWon => hasWon;
     void Start()
     {
-        winPoints = slotList.Count();
-        timer = FindFirstObjectByType<Timer>();
+        slotListWin = FindObjectsByType<Slot>(0);
+        winPoints = slotListWin.Count();
+        timer = GameObject.Find("Timer").GetComponent<Timer>();
         gameWinScreen = FindFirstObjectByType<Won>().gameObject;
     }
 
@@ -28,7 +29,7 @@ public class WinCheck : MonoBehaviour
 
             for (int i = 0; i < winPoints; i++)
             {
-                slot = slotList[i].GetComponent<Slot>();
+                slot = slotListWin[i];
                 if (slot.IsPieceCorrect)
                     points++;
             }
@@ -39,8 +40,8 @@ public class WinCheck : MonoBehaviour
         else
         {
             Debug.Log("YOU WON!!!");
-            gameWinScreen.transform.GetChild(0).gameObject.SetActive(true);
             timer.StopTimer();
+            gameWinScreen.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

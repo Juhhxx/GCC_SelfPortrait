@@ -6,8 +6,18 @@ using UnityEngine.EventSystems;
 public class Slot : MonoBehaviour, IDropHandler
 {
     private RectTransform rectTransform;
-    [SerializeField] int id;
+    int id;
+    public int Id
+    {
+        get => id;
+
+        set
+        {
+            id = value;
+        }
+    }
     private int pieceId = 0;
+    
     private float pieceRotation;
     private bool isPieceCorrect = false;
     public bool IsPieceCorrect => isPieceCorrect;
