@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
             else
                 timertext.text = string.Format("{0:0}:{1:00}",minutes,seconds);
 
-            if (seconds == 0)
+            if (time < 0)
                 StopTimer();
         }
         else

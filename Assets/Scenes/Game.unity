@@ -1156,7 +1156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timertext: {fileID: 2027435923}
-  time: 100
+  time: 70
   isInitializer: 0
   otherTimer: {fileID: 0}
 --- !u!1 &563028795

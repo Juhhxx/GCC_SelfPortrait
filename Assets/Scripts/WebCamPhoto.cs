@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -12,13 +11,14 @@ public class WebCamPhoto : MonoBehaviour
     void Start()
     {
         allPieces = FindObjectsByType<Drag>(0);
-        InitializeCamera();  
+        InitializeCamera();
+        
     }
-    void InitializeCamera()
+    private void InitializeCamera()
     {
         webCamTexture = new WebCamTexture();
-        // GetComponent<Renderer>().material.mainTexture = webCamTexture;
         webCamTexture.Play();
+        // GetComponent<Renderer>().material.mainTexture = webCamTexture;
     }
     void Update()
     {
@@ -33,9 +33,9 @@ public class WebCamPhoto : MonoBehaviour
     }
     IEnumerator TakePhoto()
     {
-        webCamTexture.Play();
         yield return new WaitForEndOfFrame();
 
+        
         Texture2D photo = new Texture2D(webCamTexture.width, webCamTexture.height);
         photo.SetPixels(webCamTexture.GetPixels());
         photo.Apply();
@@ -54,8 +54,7 @@ public class WebCamPhoto : MonoBehaviour
 
             allPieces[i].gameObject.GetComponent<Image>().sprite = Piece;
             allPieces[i].Id = i + 1;
-
-            Debug.Log($"Set {allPieces[i].gameObject} : Slice at ({photoFrame.x},{photoFrame.y})");
+            // Debug.Log($"Set Piece {i} : Slice at ({photoFrame.x},{photoFrame.y})");
 
             if ((i + 1) % 3 == 0)
             {
