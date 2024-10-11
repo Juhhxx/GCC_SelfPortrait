@@ -1,49 +1,71 @@
 using System.Collections;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class WebCamPhoto : MonoBehaviour
 {
     [SerializeField] private Image endAnimImage;
     private WebCamTexture webCamTexture;
     private Drag[] allPieces;
-    
+
+
+    private bool CheckPermissionAndRaiseCallbackIfGranted(UserAuthorization authenticationType)
+    {
+        if (Application.HasUserAuthorization(authenticationType))
+        {
+            InitializeCamera();
+        }
+        return false;
+    }
+    private IEnumerator AskForPermissionIfRequired(UserAuthorization authenticationType)
+    {
+        if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
+        {
+            yield return Application.RequestUserAuthorization(authenticationType);
+            if (!CheckPermissionAndRaiseCallbackIfGranted(authenticationType))
+                Debug.LogWarning($"Permission {authenticationType} Denied");
+        }
+    }
     void Start()
     {
-        allPieces = FindObjectsByType<Drag>(0);
         InitializeCamera();
-        
+    }
+    public void AskCamerapermission()
+    {
+        StartCoroutine(AskForPermissionIfRequired(UserAuthorization.WebCam));
     }
     private void InitializeCamera()
     {
         webCamTexture = new WebCamTexture();
-        webCamTexture.Play();
         // GetComponent<Renderer>().material.mainTexture = webCamTexture;
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(TakePhoto());
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         StartCoroutine(TakePhoto());
+    //     }
+    // }
     public void PhotoTaker()
     {
         StartCoroutine(TakePhoto());
     }
     IEnumerator TakePhoto()
     {
-        yield return new WaitForEndOfFrame();
+        webCamTexture.Play();
 
+        yield return new WaitForSeconds(3.5f);
         
+        allPieces = FindObjectsByType<Drag>(FindObjectsSortMode.None);
+
         Texture2D photo = new Texture2D(webCamTexture.width, webCamTexture.height);
         photo.SetPixels(webCamTexture.GetPixels());
         photo.Apply();
 
         webCamTexture.Stop();
-        byte[] bytes = photo.EncodeToPNG();
-        File.WriteAllBytes("Assets\\Sprites\\" + "photo.png", bytes);
+        // byte[] bytes = photo.EncodeToPNG();
+        // File.WriteAllBytes("Assets\\Sprites\\" + "photo.png", bytes);
         // Debug.Log($"Take Photo\nSave at: Assets\\Sprites\\photo.png");
 
         Rect photoFrame = new Rect(360,480,240,240);

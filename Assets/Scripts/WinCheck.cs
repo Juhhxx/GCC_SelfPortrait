@@ -21,7 +21,6 @@ public class WinCheck : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(hasWon);
         if (!hasWon)
         {    
             points = 0;

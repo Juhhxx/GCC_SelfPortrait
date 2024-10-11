@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IDropHandler
+public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private RectTransform rectTransform;
     int id;
@@ -25,11 +24,20 @@ public class Slot : MonoBehaviour, IDropHandler
     {
         rectTransform = GetComponent<RectTransform>();
     }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GetComponent<Image>().color = new Vector4(0f,0f,0f,0.5f);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GetComponent<Image>().color = new Vector4(0f,0f,0f,0f);
+    }
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = rectTransform.anchoredPosition;
+            eventData.pointerDrag.GetComponent<RectTransform>().localScale = rectTransform.localScale;
             pieceRotation = eventData.pointerDrag.GetComponent<RectTransform>().rotation.z;
             pieceId = eventData.pointerDrag.GetComponent<Drag>().Id;
 

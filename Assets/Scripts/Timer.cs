@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private float time;
     [SerializeField] private bool isInitializer;
     [SerializeField] private GameObject otherTimer;
+    [SerializeField] private GameObject pointer;
     private bool timerRun = true;
     private float timerStore;
     private WinCheck win;
@@ -22,6 +23,9 @@ public class Timer : MonoBehaviour
     }
     void Update()
     {
+        if (time == 4)
+            cameraManager.GetComponent<WebCamPhoto>().PhotoTaker();
+
         if (timerRun)
         {
             time -= Time.deltaTime;
@@ -32,16 +36,19 @@ public class Timer : MonoBehaviour
             if (isInitializer)
                 timertext.text = string.Format("{0:0}",seconds);
             else
+            {
                 timertext.text = string.Format("{0:0}:{1:00}",minutes,seconds);
+                float rotation = 360/timerStore * seconds;
+                pointer.transform.rotation = Quaternion.Euler(0f,0f,rotation);
+            }
 
             if (time < 0)
                 StopTimer();
         }
-        else
+        else if (time <= 0)
         {
             if (isInitializer)
             {
-                cameraManager.GetComponent<WebCamPhoto>().PhotoTaker();
                 otherTimer.GetComponent<Timer>().RestartTimer();
                 gameObject.SetActive(false);
             }
@@ -54,6 +61,10 @@ public class Timer : MonoBehaviour
                 }
             }
         }
+    }
+    public void StartTimer()
+    {
+        timerRun = true;
     }
     public void StopTimer()
     {

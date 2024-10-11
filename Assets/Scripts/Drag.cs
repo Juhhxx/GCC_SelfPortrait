@@ -48,12 +48,13 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     public void OnBeginDrag(PointerEventData eventDrag)
     {
         gCanvas.alpha = alphaValue;
+        if (rectTrans.localScale.x != 2)
+            rectTrans.localScale = new Vector3(2.5f,2.5f,2.5f);
         gCanvas.blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
         rectTrans.anchoredPosition += eventData.delta / canvas.scaleFactor;
-        
     }
     public void OnEndDrag(PointerEventData eventData)
     {
